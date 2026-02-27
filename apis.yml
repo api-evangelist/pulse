@@ -1,0 +1,90 @@
+name: Pulse API
+description: APIs for the Pulse platform - a comprehensive API management and monitoring solution
+image: https://example.com/pulse-logo.png
+url: https://pulse.example.com
+created: '2024-01-15'
+modified: '2024-01-15'
+apis:
+- name: Pulse Core API
+  description: Main API for managing pulse monitoring, alerts, and system health checks
+  image: https://example.com/pulse-core-icon.png
+  humanURL: https://pulse.example.com/docs
+  baseURL: https://api.pulse.example.com/v1
+  tags:
+  - monitoring
+  - health-checks
+  - alerts
+  - uptime
+  properties:
+  - type: X-documentation
+    url: https://pulse.example.com/docs/core-api
+  - type: X-openapi
+    url: https://api.pulse.example.com/v1/openapi.json
+  - type: X-postman-collection
+    url: https://pulse.example.com/postman/core-api.json
+  - type: X-signup
+    url: https://pulse.example.com/signup
+  - type: X-pricing
+    url: https://pulse.example.com/pricing
+  - type: X-terms-of-service
+    url: https://pulse.example.com/terms
+  - type: X-authentication
+    url: https://pulse.example.com/docs/authentication
+  contact:
+  - FN: Pulse API Support
+    email: api-support@pulse.example.com
+    X-twitter: pulseapi
+- name: Pulse Analytics API
+  description: API for accessing analytics, metrics, and reporting data
+  image: https://example.com/pulse-analytics-icon.png
+  humanURL: https://pulse.example.com/docs/analytics
+  baseURL: https://api.pulse.example.com/v1/analytics
+  tags:
+  - analytics
+  - metrics
+  - reporting
+  - data
+  properties:
+  - type: X-documentation
+    url: https://pulse.example.com/docs/analytics-api
+  - type: X-openapi
+    url: https://api.pulse.example.com/v1/analytics/openapi.json
+- name: Pulse Webhooks API
+  description: API for managing webhooks and event subscriptions
+  image: https://example.com/pulse-webhooks-icon.png
+  humanURL: https://pulse.example.com/docs/webhooks
+  baseURL: https://api.pulse.example.com/v1/webhooks
+  tags:
+  - webhooks
+  - events
+  - notifications
+  - integrations
+  properties:
+  - type: X-documentation
+    url: https://pulse.example.com/docs/webhooks-api
+  - type: X-openapi
+    url: https://api.pulse.example.com/v1/webhooks/openapi.json
+common:
+- type: X-portal
+  url: https://portal.pulse.example.com
+- type: X-blog
+  url: https://pulse.example.com/blog
+- type: X-status
+  url: https://status.pulse.example.com
+- type: X-support
+  url: https://pulse.example.com/support
+- type: X-github
+  url: https://github.com/pulse-api
+- type: X-rate-limits
+  url: https://pulse.example.com/docs/rate-limits
+maintainers:
+- FN: Pulse API Team
+  email: api-team@pulse.example.com
+  X-twitter: pulseapi
+  X-github: pulse-api
+tags:
+- monitoring
+- APIs
+- health-checks
+- analytics
+- webhooks
