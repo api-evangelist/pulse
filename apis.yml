@@ -1,5 +1,5 @@
 aid: pulse
-name: Pulse API
+name: Pulse
 description: APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing secure remote access VPN, network access control, and zero trust access solutions.
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/pulse/refs/heads/main/apis.yml
