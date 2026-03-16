@@ -1,191 +1,71 @@
+aid: pulse
 name: Pulse API
-description: >-
-  APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing secure remote
-  access VPN, network access control, and zero trust access solutions. Ivanti
-  Connect Secure (formerly Pulse Connect Secure) is the most widely deployed
-  SSL VPN for organizations of any size, offering REST APIs for configuration
-  management, system monitoring, authentication, and license management.
-image: https://example.com/pulse-logo.png
-url: https://www.ivanti.com/products/connect-secure-vpn
-created: '2024-01-15'
-modified: '2026-03-03'
-apis:
-- name: Pulse Core API
-  description: Main API for managing pulse monitoring, alerts, and system health checks
-  image: https://example.com/pulse-core-icon.png
-  humanURL: https://pulse.example.com/docs
-  baseURL: https://api.pulse.example.com/v1
-  tags:
-  - monitoring
-  - health-checks
-  - alerts
-  - uptime
-  properties:
-  - type: X-documentation
-    url: https://pulse.example.com/docs/core-api
-  - type: X-openapi
-    url: https://api.pulse.example.com/v1/openapi.json
-  - type: X-postman-collection
-    url: https://pulse.example.com/postman/core-api.json
-  - type: X-signup
-    url: https://pulse.example.com/signup
-  - type: X-pricing
-    url: https://pulse.example.com/pricing
-  - type: X-terms-of-service
-    url: https://pulse.example.com/terms
-  - type: X-authentication
-    url: https://pulse.example.com/docs/authentication
-  contact:
-  - FN: Pulse API Support
-    email: api-support@pulse.example.com
-    X-twitter: pulseapi
-- name: Pulse Analytics API
-  description: API for accessing analytics, metrics, and reporting data
-  image: https://example.com/pulse-analytics-icon.png
-  humanURL: https://pulse.example.com/docs/analytics
-  baseURL: https://api.pulse.example.com/v1/analytics
-  tags:
-  - analytics
-  - metrics
-  - reporting
-  - data
-  properties:
-  - type: X-documentation
-    url: https://pulse.example.com/docs/analytics-api
-  - type: X-openapi
-    url: https://api.pulse.example.com/v1/analytics/openapi.json
-- name: Pulse Webhooks API
-  description: API for managing webhooks and event subscriptions
-  image: https://example.com/pulse-webhooks-icon.png
-  humanURL: https://pulse.example.com/docs/webhooks
-  baseURL: https://api.pulse.example.com/v1/webhooks
-  tags:
-  - webhooks
-  - events
-  - notifications
-  - integrations
-  properties:
-  - type: X-documentation
-    url: https://pulse.example.com/docs/webhooks-api
-  - type: X-openapi
-    url: https://api.pulse.example.com/v1/webhooks/openapi.json
-- name: Ivanti Connect Secure REST API
-  description: >-
-    REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure)
-    VPN appliances. Provides endpoints for system configuration, user and role
-    management, authentication server configuration, license management, network
-    settings, resource policies, and system maintenance operations. Supports
-    JSON format and uses API key-based authentication.
-  humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
-  baseURL: https://{appliance-host}/api/v1
-  tags:
-  - vpn
-  - secure-access
-  - configuration
-  - authentication
-  - network-security
-  - ssl-vpn
-  properties:
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/ics-spec-configs-using-restapis.htm
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/legacy/PCS/9.1Rx/9.1R7/9.1R7-PCS_PPS-REST-API-Solutions-Guide.pdf
-  - type: X-getting-started
-    url: https://forums.ivanti.com/s/article/How-To-Get-Rest-API-Key-From-Ivanti-Connect-Secure-Using-Postman-Application?language=en_US
-- name: Ivanti Policy Secure REST API
-  description: >-
-    REST API for managing Ivanti Policy Secure (formerly Pulse Policy Secure)
-    network access control appliances. Provides a standardized method for
-    next-gen firewalls, NAC devices, and third-party systems to interact with
-    IPS. Supports GET, POST, PUT, and DELETE operations with JSON format.
-  humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
-  baseURL: https://{appliance-host}/api/v1
-  tags:
-  - nac
-  - network-access-control
-  - policy
-  - security
-  - configuration
-  properties:
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/legacy/PCS/9.1Rx/9.1R7/9.1R7-PCS_PPS-REST-API-Solutions-Guide.pdf
-- name: Ivanti Neurons for Zero Trust Access REST API
-  description: >-
-    REST API for managing Ivanti Neurons for Zero Trust Access (nZTA). The API
-    service runs on the Controller and provides endpoints for managing zero
-    trust access policies, gateways, and user access. Enables programmatic
-    management of software-defined perimeter and microsegmentation capabilities.
-  humanURL: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
-  baseURL: https://{controller-host}/api
-  tags:
-  - zero-trust
-  - ztna
-  - secure-access
-  - software-defined-perimeter
-  - microsegmentation
-  properties:
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/pzta-docs-latest/pzta-api/html/index.html
-  - type: X-documentation
-    url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/pzta-docs-latest/pzta-api/html/api_overview.html
-common:
-- type: X-portal
-  url: https://portal.pulse.example.com
-- type: X-blog
-  url: https://pulse.example.com/blog
-- type: X-status
-  url: https://status.pulse.example.com
-- type: X-support
-  url: https://pulse.example.com/support
-- type: X-github
-  url: https://github.com/pulse-api
-- type: X-rate-limits
-  url: https://pulse.example.com/docs/rate-limits
-- type: X-website
-  url: https://www.ivanti.com/products/connect-secure-vpn
-- type: X-developer-portal
-  url: https://www.ivanti.com/support/api
-- type: X-documentation
-  url: https://www.ivanti.com/support/product-documentation
-- type: X-privacy-policy
-  url: https://www.ivanti.com/company/legal/privacy-policy
-- type: X-legal
-  url: https://www.ivanti.com/company/legal
-- type: X-status-page
-  url: https://status.ivanticloud.com/
-- type: X-blog
-  url: https://www.ivanti.com/blog
-- type: X-community
-  url: https://forums.ivanti.com/s/welcome-pulse-secure?language=en_US
-- type: X-linkedin
-  url: https://www.linkedin.com/company/ivanti
-- type: X-downloads
-  url: https://www.ivanti.com/resources/downloads
-- type: X-about
-  url: https://www.ivanti.com/company
-- type: X-security
-  url: https://www.ivanti.com/support/contact-security
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-  X-twitter: kinlane
-  X-github: kinlane
+description: APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing secure remote access VPN, network access control, and zero trust access solutions.
+type: Index
+url: https://raw.githubusercontent.com/api-evangelist/pulse/refs/heads/main/apis.yml
 tags:
-- monitoring
-- APIs
-- health-checks
-- analytics
-- webhooks
-- vpn
-- secure-access
-- ssl-vpn
-- zero-trust
-- network-access-control
-- ivanti
-- pulse-secure
+  - VPN
+  - Secure Access
+  - Network Security
+  - Zero Trust
+  - SSL VPN
+  - Ivanti
+created: '2024-01-15'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+apis:
+  - aid: pulse:ivanti-connect-secure-rest-api
+    name: Ivanti Connect Secure REST API
+    description: REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure) VPN appliances. Provides endpoints for system configuration, user and role management, authentication server configuration, license management, network settings, resource policies, and system maintenance operations.
+    humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+    tags:
+      - VPN
+      - Secure Access
+      - Configuration
+      - Authentication
+      - Network Security
+      - SSL VPN
+    properties:
+      - type: Documentation
+        url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+  - aid: pulse:ivanti-policy-secure-rest-api
+    name: Ivanti Policy Secure REST API
+    description: REST API for managing Ivanti Policy Secure (formerly Pulse Policy Secure) network access control appliances.
+    humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+    tags:
+      - NAC
+      - Network Access Control
+      - Policy
+      - Security
+    properties:
+      - type: Documentation
+        url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+  - aid: pulse:ivanti-neurons-zero-trust-rest-api
+    name: Ivanti Neurons for Zero Trust Access REST API
+    description: REST API for managing Ivanti Neurons for Zero Trust Access (nZTA), providing endpoints for managing zero trust access policies, gateways, and user access.
+    humanURL: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
+    tags:
+      - Zero Trust
+      - ZTNA
+      - Secure Access
+    properties:
+      - type: Documentation
+        url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
+common:
+  - type: Website
+    url: https://www.ivanti.com/products/connect-secure-vpn
+  - type: Documentation
+    url: https://www.ivanti.com/support/product-documentation
+  - type: PrivacyPolicy
+    url: https://www.ivanti.com/company/legal/privacy-policy
+  - type: TermsOfService
+    url: https://www.ivanti.com/company/legal
+  - type: Status
+    url: https://status.ivanticloud.com/
+  - type: Blog
+    url: https://www.ivanti.com/blog
+  - type: Community
+    url: https://forums.ivanti.com/s/welcome-pulse-secure?language=en_US
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
