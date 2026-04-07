@@ -4,12 +4,12 @@ description: APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing sec
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/pulse/refs/heads/main/apis.yml
 tags:
-  - VPN
-  - Secure Access
-  - Network Security
-  - Zero Trust
-  - SSL VPN
   - Ivanti
+  - Network Security
+  - Secure Access
+  - SSL VPN
+  - VPN
+  - Zero Trust
 created: '2024-01-15'
 modified: '2026-03-16'
 specificationVersion: '0.19'
@@ -19,12 +19,12 @@ apis:
     description: REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure) VPN appliances. Provides endpoints for system configuration, user and role management, authentication server configuration, license management, network settings, resource policies, and system maintenance operations.
     humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
     tags:
-      - VPN
-      - Secure Access
-      - Configuration
       - Authentication
+      - Configuration
       - Network Security
+      - Secure Access
       - SSL VPN
+      - VPN
     properties:
       - type: Documentation
         url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
@@ -45,9 +45,9 @@ apis:
     description: REST API for managing Ivanti Neurons for Zero Trust Access (nZTA), providing endpoints for managing zero trust access policies, gateways, and user access.
     humanURL: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
     tags:
+      - Secure Access
       - Zero Trust
       - ZTNA
-      - Secure Access
     properties:
       - type: Documentation
         url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
