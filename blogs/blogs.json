@@ -1,0 +1,13 @@
+{
+  "repo": "pulse",
+  "feeds": [
+    {
+      "source": "https://www.ivanti.com/blog",
+      "feed_url": "https://www.ivanti.com/blog/rss",
+      "saved": 10,
+      "title": "Ivanti Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:34:18Z"
+}
