@@ -60,7 +60,7 @@ common:
     url: https://www.ivanti.com/company/legal/privacy-policy
   - type: TermsOfService
     url: https://www.ivanti.com/company/legal
-  - type: Status
+  - type: StatusPage
     url: https://status.ivanticloud.com/
   - type: Blog
     url: https://www.ivanti.com/blog
