@@ -2,12 +2,20 @@
   "repo": "pulse",
   "feeds": [
     {
-      "source": "https://www.ivanti.com/blog",
+      "source": "https://www.ivanti.com/blog/feed/",
       "feed_url": "https://www.ivanti.com/blog/feed/",
-      "title": "Ivanti Blog",
-      "saved": 12
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://status.ivanticloud.com/",
+      "feed_url": "https://status.ivanticloud.com/history.atom",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "post_count": 23,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 26,
+  "fetched": "2026-06-01T23:35:02Z"
 }
