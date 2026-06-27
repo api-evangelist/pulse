@@ -5,7 +5,7 @@
       "source": "https://www.ivanti.com/blog/feed/",
       "feed_url": "https://www.ivanti.com/blog/feed/",
       "title": "",
-      "saved": 3,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -23,6 +23,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 29,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 31,
+  "fetched": "2026-06-27T12:03:07Z"
 }
