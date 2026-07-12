@@ -52,6 +52,10 @@ apis:
       - type: Documentation
         url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
 common:
+  - type: VulnerabilityDisclosure
+    url: security/pulse-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/pulse-domain-security.yml
   - type: Website
     url: https://www.ivanti.com/products/connect-secure-vpn
   - type: Documentation
