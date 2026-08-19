@@ -25,7 +25,7 @@ tags:
   - Zero Trust
 created: '2024-01-15'
 modified: '2026-04-18'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: pulse:ivanti-connect-secure-rest-api
     name: Ivanti Connect Secure REST API
