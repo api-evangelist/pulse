@@ -24,7 +24,16 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/pulse.png
 name: Pulse
-description: APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing secure remote access VPN, network access control, and zero trust access solutions.
+description: >-
+  Ivanti's secure-access product family, formerly Pulse Secure, acquired by Ivanti in 2020.
+  Three administrator-facing REST APIs configure and observe it: Ivanti Connect Secure for
+  SSL VPN remote access, Ivanti Policy Secure for 802.1X and RADIUS/TACACS+ network access
+  control, and Ivanti Neurons for Zero Trust Access for per-application ZTNA. Connect Secure
+  and Policy Secure are customer-run appliances whose management API is reached at the
+  customer's own host; nZTA is a hosted tenant. All three are configuration and management
+  interfaces rather than data-plane APIs — they change who can reach what on a corporate
+  network. Ivanti publishes no OpenAPI and no SDK for any of them; the published contract is
+  prose documentation with worked curl examples plus a customer-portal Postman collection.
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/pulse/refs/heads/main/apis.yml
 tags:
@@ -34,14 +43,26 @@ tags:
   - SSL VPN
   - VPN
   - Zero Trust
+  - ZTNA
+  - Network Access Control
+  - Remote Access
+  - Identity and Access Management
+  - Security
+  - Pulse Secure
 created: '2024-01-15'
-modified: '2026-04-18'
+modified: '2026-08-29'
 specificationVersion: '0.23'
 apis:
   - aid: pulse:ivanti-connect-secure-rest-api
     name: Ivanti Connect Secure REST API
     description: REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure) VPN appliances. Provides endpoints for system configuration, user and role management, authentication server configuration, license management, network settings, resource policies, and system maintenance operations.
-    humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+    humanURL: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/landingpage.htm
+    baseURL: https://{ics-appliance-host}/api/v1
+    baseURLNote: >-
+      Templated on purpose. Ivanti Connect Secure is an appliance (hardware, virtual or
+      Azure) the customer operates, so the API host is the customer's own appliance address.
+      Ivanti's own examples use https://<ICS-ip>/api/v1 and https://<hostname>/api/v1. There
+      is no vendor-hosted endpoint for this API.
     tags:
       - Authentication
       - Configuration
@@ -51,31 +72,121 @@ apis:
       - VPN
     properties:
       - type: Documentation
-        url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+        url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/landingpage.htm
+      - type: APIReference
+        url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_spec_configs__using_restapis.htm
+      - type: GettingStarted
+        url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+      - type: Postman
+        url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_postman_apis.htm
+      - type: Authentication
+        url: authentication/pulse-authentication.yml
+      - type: ErrorCatalog
+        url: errors/pulse-problem-types.yml
+      - type: Conventions
+        url: conventions/pulse-conventions.yml
+      - type: ChangeLog
+        url: changelog/pulse-changelog.yml
   - aid: pulse:ivanti-policy-secure-rest-api
     name: Ivanti Policy Secure REST API
     description: REST API for managing Ivanti Policy Secure (formerly Pulse Policy Secure) network access control appliances.
     humanURL: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+    baseURL: https://{ips-appliance-host}/api/v1
+    baseURLNote: >-
+      Templated on purpose. Ivanti Policy Secure is a customer-run appliance and shares the
+      ICS /api/v1 tree; the network-access-control resources sit under
+      /api/v1/configuration/uac. There is no vendor-hosted endpoint for this API.
     tags:
       - NAC
       - Network Access Control
       - Policy
       - Security
+      - RADIUS
+      - TACACS+
     properties:
       - type: Documentation
         url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm
+      - type: APIReference
+        url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ips_spec_configs__using_restapis.htm
+      - type: GettingStarted
+        url: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/overview.htm
+      - type: Authentication
+        url: authentication/pulse-authentication.yml
+      - type: ErrorCatalog
+        url: errors/pulse-problem-types.yml
+      - type: Conventions
+        url: conventions/pulse-conventions.yml
   - aid: pulse:ivanti-neurons-zero-trust-rest-api
     name: Ivanti Neurons for Zero Trust Access REST API
     description: REST API for managing Ivanti Neurons for Zero Trust Access (nZTA), providing endpoints for managing zero trust access policies, gateways, and user access.
     humanURL: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
+    baseURL: https://{nzta-tenant-host}/api/v1
+    baseURLNote: >-
+      Templated on purpose. nZTA is a per-customer hosted tenant, and Ivanti's own sample
+      code builds request URIs as host_url + api_version + resource against the tenant
+      address. Some nZTA surfaces (gateways, analytics, integrations, licenses) sit at an
+      unversioned /api/ prefix on the same host — the provider's own inconsistency.
     tags:
       - Secure Access
       - Zero Trust
       - ZTNA
+      - Analytics
+      - Policy
+      - Gateways
     properties:
       - type: Documentation
         url: https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm
+      - type: APIReference
+        url: https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/api-calls
+      - type: GettingStarted
+        url: https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/retrieving-the-authentication-dsid
+      - type: Authentication
+        url: authentication/pulse-authentication.yml
+      - type: Conventions
+        url: conventions/pulse-conventions.yml
 common:
+  - type: WellKnown
+    url: well-known/pulse-well-known.yml
+  - type: SecurityTxt
+    url: well-known/pulse-security.txt
+  - type: Security
+    url: security/pulse-vulnerability-disclosure.yml
+  - type: TrustCenter
+    url: security/pulse-trust-center.yml
+  - type: Compliance
+    url: conformance/pulse-conformance.yml
+  - type: Conformance
+    url: conformance/pulse-conformance.yml
+  - type: Authentication
+    url: authentication/pulse-authentication.yml
+  - type: ErrorCatalog
+    url: errors/pulse-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/pulse-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/pulse-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/pulse-changelog.yml
+  - type: Conventions
+    url: conventions/pulse-conventions.yml
+  - type: RateLimits
+    url: rate-limits/pulse-rate-limits.yml
+  - type: Plans
+    url: plans/pulse-plans-pricing.yml
+  - type: LLMsTxt
+    url: llms/pulse-llms.txt
+  - type: DeveloperPortal
+    url: https://www.ivanti.com/support/api
+  - type: APIReference
+    url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/landingpage.htm
+  - type: GettingStarted
+    url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+  - type: Support
+    url: https://www.ivanti.com/support
+  - type: Postman
+    url: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_postman_apis.htm
+  - type: Login
+    url: https://hub.ivanti.com/
   - type: VulnerabilityDisclosure
     url: security/pulse-vulnerability-disclosure.yml
   - type: DomainSecurity
@@ -146,3 +257,10 @@ integrations:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 12
+  pass: local-v1
+x-parent: ivanti
+x-relationship: product

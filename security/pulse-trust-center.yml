@@ -1,0 +1,55 @@
+specification: API Commons Trust Center
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://assurance.ivanti.com/
+description: >-
+  Ivanti runs a named trust center — the Ivanti Customer Assurance Profile — plus a public
+  security-and-compliance overview page. The certifications are named publicly; the reports
+  themselves are released on NDA request.
+trust_center:
+  name: Ivanti Customer Assurance Profile
+  url: https://assurance.ivanti.com/
+  status: 200
+  verified: '2026-08-29'
+  access: >-
+    Public landing page. Documents are obtained by acknowledging an NDA on the page and
+    requesting them, after which they are emailed.
+overview_page:
+  url: https://www.ivanti.com/resources/security-compliance
+  status: 200
+  verified: '2026-08-29'
+certifications:
+  - SOC 2 Type 2
+  - ISO/IEC 27001
+  - FedRAMP
+  - U.S. Federal Government Authorization to Operate (ATO)
+  - Common Criteria
+  - IRAP
+  - Cyber Essentials
+  - SIG Lite
+  - VPAT 2.4 / Section 508
+privacy_frameworks:
+  - GDPR
+  - CCPA
+regulations_addressed:
+  - NIS 2 Directive (EU)
+  - DORA (Regulation (EU) 2022/2554)
+documents_available_on_request:
+  - Standards and Policies
+  - SOC 2 Type 2 reports
+  - ISO certifications
+  - Penetration test results
+  - Standard Information Gathering Questionnaires (SIGs)
+vulnerability_disclosure:
+  see: security/pulse-vulnerability-disclosure.yml
+  policy: https://www.ivanti.com/support/contact-security
+  security_txt: well-known/pulse-security.txt
+scope_caveat: >-
+  Ivanti-wide, not product-scoped. The assurance profile states no product-level breakdown,
+  so this is not an attestation for Connect Secure, Policy Secure or nZTA specifically.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

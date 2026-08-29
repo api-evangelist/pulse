@@ -1,0 +1,89 @@
+specification: API Commons Error Catalog
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+description: >-
+  Error catalog for the Ivanti Connect Secure / Ivanti Policy Secure configuration REST API,
+  transcribed from the "Error Codes Supported" table published in the provider's own REST
+  API Solutions Guide. This is a status-code catalog, not an RFC 9457 problem+json catalog —
+  Ivanti publishes no error type URIs and no per-error identifier vocabulary.
+format: http-status
+problem_json: false
+rfc9457: false
+error_envelope:
+  media_type: application/json
+  note: >-
+    ICS/IPS support JSON only. The guide's worked examples return validation failures as a
+    JSON body alongside the status code; no stable machine-readable error `code` or `type`
+    field is documented, which is the main gap an agent hits on this API.
+problem_types:
+  - status: 200
+    title: OK
+    meaning: >-
+      Requesting resource information succeeded (GET), or a resource update succeeded (PUT).
+    retryable: false
+  - status: 201
+    title: Created
+    meaning: Resource creation succeeded (POST).
+    retryable: false
+  - status: 204
+    title: No Content
+    meaning: >-
+      Deletion of a resource succeeded with no body. PUT and POST may also return 204 when
+      no errors or warnings were raised.
+    retryable: false
+  - status: 400
+    title: Bad Request
+    meaning: >-
+      The request (GET/PUT/POST/DELETE) is invalid — the guide's stated example is incorrect
+      JSON format.
+    remediation: Fix the request body or URI syntax; do not retry unchanged.
+    retryable: false
+  - status: 401
+    title: Unauthorized
+    meaning: Any REST call made with invalid credentials.
+    remediation: >-
+      Re-issue POST /api/v1/realm_auth to mint a fresh api_key. The api_key is invalidated
+      when the admin account or its "Allow access to REST APIs" setting is toggled, and
+      expires at the admin role session timeout.
+    retryable: true
+    retry_after_reauth: true
+  - status: 403
+    title: Forbidden
+    meaning: >-
+      REST call made with valid credentials but no permission for the requested resource.
+    remediation: >-
+      The authenticating administrator's admin role / realm mapping does not grant this
+      resource. Authorization is appliance configuration, not a token scope.
+    retryable: false
+  - status: 404
+    title: Not Found
+    meaning: The requested resource in the URI does not exist.
+    retryable: false
+  - status: 422
+    title: Unprocessable Entity
+    meaning: >-
+      Any validation or referential-integrity error that would cause a PUT/POST/DELETE to
+      fail — for example deleting a resource another object still references.
+    remediation: >-
+      Resolve the referencing object first. This is the status an agent must treat as a
+      semantic rejection rather than a transport failure.
+    retryable: false
+  - status: 500
+    title: Server Error
+    meaning: The ICS/IPS REST server is not responding.
+    retryable: true
+notes:
+  - >-
+    No 429 is documented. Ivanti publishes no rate limits for these APIs; see
+    rate-limits/pulse-rate-limits.yml.
+  - >-
+    The Ivanti Neurons for Zero Trust Access API guide states, per operation, that "a JSON
+    body containing an error is returned" on failure but publishes neither the error schema
+    nor an enumerated code list, so no nZTA-specific entries are asserted here.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

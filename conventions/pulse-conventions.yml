@@ -1,0 +1,195 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+description: >-
+  Cross-cutting runtime semantics for the Ivanti secure-access APIs — what an agent needs to
+  know before it calls them, read from the provider's own REST API Solutions Guide and the
+  Ivanti Neurons for Zero Trust Access API guide. These are configuration-management APIs
+  for a security appliance and a ZTA tenant: almost every operation is a WRITE against live
+  network access control, which makes the reversibility block below the most consequential
+  section in this file.
+auth_style:
+  ics_ips: >-
+    HTTP Basic, where the username is a server-minted api_key from POST /api/v1/realm_auth
+    and the password is empty.
+  nzta: DSID session cookie minted from the tenant admin sign-in flow.
+  see: authentication/pulse-authentication.yml
+media_types:
+  request: application/json
+  response: application/json
+  note: >-
+    "ICS/IPS supports JSON format only." Binary configuration import is the one exception —
+    it is sent as a base64 configuration string with Content-Type text/html.
+methods:
+  supported: [GET, POST, PUT, DELETE]
+  unsupported: [PATCH]
+  semantics:
+    GET: Retrieve a representation of a resource.
+    POST: Create a new resource.
+    PUT: >-
+      Create a new resource at a new URL, or modify an existing resource at an existing URL.
+    DELETE: Delete an existing resource.
+  source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  scope: null
+  retention: null
+  note: >-
+    No Idempotency-Key header, no request-id de-duplication and no retry-safety contract is
+    documented on any of these APIs. The only idempotency available is the HTTP method's own:
+    PUT against a named resource path is naturally idempotent, POST against a collection is
+    not. An agent retrying a POST to /api/v1/configuration/.../rule/ after a timeout can
+    create a duplicate policy object, and nothing in the API will stop it.
+pagination:
+  supported: false
+  note: >-
+    No page/offset/cursor parameters are documented on any collection endpoint. Collections
+    return whole. The nZTA analytics endpoints take a time-window filter object
+    (CommonFilterObject: current_time, start_time, time_duration_type, timezone_offset,
+    gateway_type, global_filter) rather than a page cursor, and a small number of ICS
+    endpoints take an ad-hoc ?count= query.
+filtering_and_expansion:
+  query_filters:
+    - 'ICS: ?name=<url-encoded name> on /api/v1/system/activeusers'
+    - 'ICS: ?status=all|sbr on /api/v1/system/healthcheck'
+    - 'ICS: ?expand and ?excludePulsePackages on host-checker ESAP retrieval'
+    - 'ICS: ?config-type=system|user|ivs on the archiving local-backup collection'
+    - 'ICS: ?action=install|delete on /api/v1/license/license-key'
+    - 'nZTA: request-body filter objects on the analytics POST endpoints'
+  sparse_fieldsets: false
+hypermedia:
+  style: href links
+  note: >-
+    GET /api/v1/configuration returns a link map rather than a document — each top-level
+    branch (administrators, authentication, system, users) is returned as an object with an
+    href to its own sub-resource. The configuration tree is therefore walkable from a single
+    entry point, which is the most agent-friendly property this API has.
+  example_source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+url_encoding:
+  required: true
+  note: >-
+    Resource names are carried IN the path, so names containing spaces or reserved
+    characters must be percent-encoded. The guide publishes an explicit encoding table
+    (space %20, # %23, $ %24, %% %25, & %26, * %2A, / %2F, @ %40, \ %5C). This is a real
+    trap: policy and user names on these appliances routinely contain spaces.
+versioning:
+  in: uri-path
+  current: v1
+  see: lifecycle/pulse-lifecycle.yml
+error_envelope:
+  style: http-status + JSON body
+  rfc9457: false
+  see: errors/pulse-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: null
+  note: >-
+    No rate-limit headers and no 429 are documented. See rate-limits/pulse-rate-limits.yml.
+request_id_tracing:
+  header: null
+  note: >-
+    No correlation/request-id header is documented. ICS 25.1.3.0 added "REST API Diagnostic
+    Logs" on the appliance for troubleshooting API calls, which is server-side visibility,
+    not a client-side trace id.
+dry_run_mode:
+  supported: false
+  note: >-
+    No preview, validate-only or dry-run flag is documented on any write operation. An agent
+    cannot rehearse a configuration change against these APIs.
+reversibility:
+  grade: documented
+  grade_rationale: >-
+    Real, named reversal operations are published for the ICS/IPS appliance surface, but no
+    document states a window inside which a reversal remains possible — no backup retention
+    count, no retention period, no time limit on the software rollback partition. A reversal
+    path with no stated window is `documented`, not `verified`.
+  api: Ivanti Connect Secure REST API / Ivanti Policy Secure REST API
+  write_surface: true
+  reversals:
+    - operation: Restore a saved local configuration backup
+      request: POST /api/v1/system/maintenance/archiving/localbackup
+      body: >-
+        {"config-type":"system|user","operation":"restore","identifier":<backup id>,
+        "restoreCertificate":0|1,"restoreIpAddressAndNetworkSettings":0|1,
+        "restoreNetworkSettings":0|1}
+      reverses: any configuration change made since that backup was taken
+      prerequisite: >-
+        A backup must have been saved first with the same endpoint and
+        {"operation":"save"}. Available backups are listed by
+        GET /api/v1/system/maintenance/archiving/localbackup?config-type=system|user|ivs,
+        which returns {identifier, time} pairs.
+      window: not stated
+      window_note: >-
+        No retention period and no maximum number of retained local backups is published.
+        Ivanti also publishes a delete operation on the same endpoint, so a backup an agent
+        is relying on can be removed by another administrator without notice.
+      docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_spec_configs__using_restapis.htm
+    - operation: Restore configuration from an exported binary configuration file
+      request: PUT /api/v1/system/binary-configuration?import=normal|full
+      reverses: >-
+        A whole-appliance configuration change, from a file previously exported with
+        POST /api/v1/system/binary-configuration?export=system_config|user_config.
+      modes:
+        normal: >-
+          Imports the binary configuration EXCLUDING IP, network and cluster configuration —
+          the safer default.
+        full: Imports everything present in the supplied configuration body.
+      window: not stated
+      window_note: >-
+        The exported file is held by the caller, so there is no server-side expiry; the risk
+        is the opposite one — an old export silently reverts intervening changes.
+      docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/icsips_configs_using_restapis.htm
+    - operation: Roll back system software to the previous image
+      request: POST /api/v1/system/maintenance
+      body: '{"operation":"rollback"}'
+      reverses: a software upgrade
+      state_visibility: >-
+        GET /api/v1/system/system-information returns rollback-partition-information
+        (build, os-name, os-version), so an agent can read WHICH version a rollback would
+        land on before triggering it.
+      window: not stated
+      window_note: >-
+        Bounded by the rollback partition holding exactly one previous image; a second
+        upgrade overwrites it. Ivanti publishes no statement of that boundary in the API
+        guide, so it is not asserted here as a window.
+      docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_spec_configs__using_restapis.htm
+    - operation: Delete a created configuration object
+      request: DELETE /api/v1/configuration/**
+      reverses: a POST that created the object
+      window: not stated
+      window_note: >-
+        A DELETE is not a true undo — it removes the object but does not restore whatever the
+        POST displaced, and 422 Unprocessable Entity is returned when another object still
+        references it.
+  nzta:
+    grade: documented
+    note: >-
+      The nZTA tenant API exposes DELETE on gateways, device policy groups and rules,
+      hostchecker levels and products, MDM servers and syslog integrations, so created
+      objects can be removed. No backup/restore, snapshot or rollback operation is published
+      for the nZTA tenant, and no window is stated for anything.
+  destructive_operations_without_reversal:
+    - >-
+      POST /api/v1/system/maintenance with a reboot or factory-reset style operation takes
+      the appliance offline; the reversal is physical/console access, not an API call.
+    - >-
+      DELETE on a cluster member (/api/v1/cluster/members/<node>) has no documented rejoin
+      reversal on the API surface.
+  agent_guidance: >-
+    Take a local backup (operation "save") and record the returned identifier BEFORE any
+    write to /api/v1/configuration, because that identifier is the only handle an agent has
+    on the pre-change state, and nothing in the API creates one automatically.
+cross_links:
+  errors: errors/pulse-problem-types.yml
+  lifecycle: lifecycle/pulse-lifecycle.yml
+  authentication: authentication/pulse-authentication.yml
+  rate_limits: rate-limits/pulse-rate-limits.yml
+  conformance: conformance/pulse-conformance.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

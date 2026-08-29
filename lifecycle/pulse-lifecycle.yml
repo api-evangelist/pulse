@@ -1,0 +1,121 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://www.ivanti.com/resources/library/ivi/2589/e9d5fd8f9c27/?ext=pdf
+description: >-
+  Versioning, deprecation and operational-lifecycle posture for the Ivanti secure-access
+  (former Pulse Secure) product family. The centrepiece is a real, published, product-family
+  scoped end-of-life policy PDF that names PCS, PPS, ICS, nSA and nZTA explicitly and states
+  the milestone windows.
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /api/v1
+  note: >-
+    Both the ICS/IPS configuration API and the nZTA policy API version in the URI as
+    /api/v1/. Some nZTA surfaces (gateways, analytics, integrations, licenses) sit at an
+    unversioned /api/ prefix, which is the provider's own inconsistency, not ours.
+  header_negotiation: false
+  product_versioning: >-
+    The appliance software itself versions on an x.y.z / xx.yRn scheme (ICS 25.1.3.0,
+    ISAC 22.8R7). API behaviour is tied to the appliance release, so an integration's real
+    version contract is the appliance version, not the /v1 path segment.
+deprecation:
+  policy_published: true
+  policy_url: https://www.ivanti.com/resources/library/ivi/2589/e9d5fd8f9c27/?ext=pdf
+  policy_title: Network Security Product End-of-Life (EOL Policy)
+  applies_to:
+    - Pulse Connect Secure (PCS)
+    - Pulse Policy Secure (PPS)
+    - Pulse Secure Desktop Client (PDC)
+    - Pulse Secure Appliance (PSA)
+    - Pulse Secure Virtual Appliance (PSA Virtual)
+    - Ivanti Connect Secure (ICS)
+    - Ivanti Neurons for Secure Access (nSA)
+    - Ivanti Neurons for ZTA (nZTA)
+    - Ivanti Security Appliance (ISA)
+    - Ivanti Secure Access Client (ISAC)
+  mechanism: >-
+    End of Life Notifications (EOLNs), a class of Product Support Notification, posted to
+    the Ivanti public website and the Ivanti Community site on a product-by-product basis.
+  milestones:
+    - name: Notification Date
+      definition: The date of the EOLN.
+    - name: End of Order (EOO)
+      window: approximately 180 days after the Notification Date
+      effect: >-
+        Last date purchase orders may be placed for the affected product and for new support
+        contracts. Renewals of existing support contracts may still be purchased after EOO.
+    - name: End of Engineering (EOE)
+      window: >-
+        approximately 18 months after the General Availability date of the last supported
+        software version
+      effect: >-
+        No further releases, service releases, maintenance releases or patches are created.
+        Support narrows to investigation, troubleshooting, configuration guidance and
+        workarounds.
+    - name: Critical security patch tail
+      window: approximately 12 months after EOE
+      effect: >-
+        Critical must-fix security patches continue to be provided where commercially
+        available solutions exist.
+    - name: End of Support (EOS)
+      effect: >-
+        Last date to receive contracted service. After EOS, support is per-incident and
+        non-contracted at Ivanti's discretion, and Ivanti is under no obligation to keep
+        releases available for download.
+    - name: End of Life (EOL)
+      effect: All services, support and development for the product cease.
+  release_vs_version:
+    definition: >-
+      A "Version" is a series of Releases sharing the x.y denomination; a "Release" is an
+      image issued under a Version (PCS 8.2R1 through 8.2R6 are Releases under Version 8.2).
+      EOL milestones are stated per Version.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  header_note: >-
+    Neither RFC 8594 Sunset nor the Deprecation header is emitted or documented on these
+    APIs. Deprecation is communicated in documents and release notes only.
+deprecated_operations:
+  - operation: GET /api/v1/auth
+    api: Ivanti Connect Secure REST API / Ivanti Policy Secure REST API
+    replacement: POST /api/v1/realm_auth
+    statement: >-
+      "Ivanti recommends using api/v1/realm_auth instead of api/v1/auth as it will not be
+      supported from 22.7R2.1 release onwards. Update/Modify your REST based scripts to make
+      use of /api/v1/realm_auth."
+    removal_window: from the 22.7R2.1 release onwards
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+status_page:
+  url: https://status.ivanticloud.com/
+  status: 200
+  verified: '2026-08-29'
+  covers: >-
+    Ivanti cloud services, including Ivanti Neurons for Secure Access / Zero Trust Access.
+    The on-premises ICS/IPS appliance APIs run in the customer's own datacentre and are by
+    definition not covered by a vendor status page.
+  machine_readable_feed: not published
+release_notes:
+  published: true
+  format: PDF per release
+  latest: https://help.ivanti.com/ps/help/en_US/ICS/25.1.x/25.1.3.0/25.xICSRN.pdf
+  index: https://www.ivanti.com/support/product-documentation
+  see_also: changelog/pulse-changelog.yml
+sla:
+  published: false
+  note: >-
+    No public SLA document. Support entitlements are contractual and sales-gated; the EOL
+    policy explicitly conditions all support on a valid, unexpired support contract.
+security_advisories:
+  url: https://www.ivanti.com/blog/topics/security-advisory
+  status: 200
+  note: >-
+    Ivanti publishes security advisories for this product family on a dated blog topic feed;
+    monthly security updates and Patch Tuesday posts are already harvested into blogs/.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

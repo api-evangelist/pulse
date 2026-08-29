@@ -1,0 +1,89 @@
+specification: API Commons ChangeLog
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://help.ivanti.com/ps/help/en_US/ICS/25.1.x/25.1.3.0/25.xICSRN.pdf
+description: >-
+  Change history for Ivanti Connect Secure, read from the provider's published release
+  notes. Ivanti does not run a dated web changelog for this product family — the record of
+  change is a per-release PDF carrying its own dated revision-history table, plus a
+  quarterly platform release page.
+scheme: appliance-release
+scheme_note: >-
+  Releases are identified as YY.M.p.b (ICS 25.1.3.0) and the client as xx.yRn (ISAC 22.8R7).
+  The REST API's own /v1 path segment has not moved; API change ships inside appliance
+  releases, so the release notes are the only place API-affecting change is announced.
+current_version: 25.1.3.0
+current_version_date: '2026-07'
+sources:
+  - url: https://help.ivanti.com/ps/help/en_US/ICS/25.1.x/25.1.3.0/25.xICSRN.pdf
+    kind: release notes (PDF, per release)
+    status: 200
+  - url: https://www.ivanti.com/releases/2026/q2
+    kind: quarterly platform release summary
+    status: 200
+  - url: https://www.ivanti.com/support/product-documentation
+    kind: documentation index the release notes are published under
+    status: 200
+entries:
+  - version: 25.1.3.0
+    date: '2026-07'
+    document_revision: '3.0'
+    build: '22109'
+    breaking: false
+    api_affecting: true
+    highlights:
+      - >-
+        Bulk ACL Management Using REST API — create, update and delete multiple Access
+        Control Lists in a single API request.
+      - >-
+        Active User Session API enhancements — the Active User Sessions REST API can now
+        filter session data by user.
+      - >-
+        REST API Diagnostic Logs — a new diagnostic logging capability for system health
+        monitoring operations, for troubleshooting REST API calls.
+      - >-
+        ACME (RFC 8555) support — automated certificate request, domain validation, issuance
+        and deployment on the designated interface.
+      - >-
+        FIDO2 authentication enhancements, including FIDO2 support for the mobile Ivanti
+        Secure Access Client.
+      - Windows Hello for Business single sign-on enhancements.
+      - WebSocket support to backend application servers through a configured HTTP(S) proxy.
+      - Default VLAN ID support with IPv6 on internal interfaces.
+    companion_versions:
+      ics_for_azure: '23409'
+      isac: 22.8R7
+      mobile_client: 22.8R8
+      waf_default_crs: 1.0.4
+      default_esap: 4.6.4
+  - version: 25.1.1.1
+    date: '2026-05'
+    document_revision: '4.0'
+    breaking: false
+    highlights:
+      - Security enhancement and bug fixes.
+  - version: 25.1.1.0
+    date: '2026-03'
+    document_revision: '3.0'
+    breaking: false
+    highlights:
+      - Updated what's new, known issues and fixed issues.
+  - version: 25.1.0.0
+    date: '2025-09'
+    document_revision: '1.0'
+    breaking: false
+    highlights:
+      - First release of the 25.1 version line.
+notes:
+  - >-
+    Dates are month-precision because the release notes' own revision-history table is
+    month-precision; no day-level publication date is published.
+  - >-
+    The 25.1.3.0 release notes also carry Resolved Issues and Known Issues sections, which
+    are the closest thing this product family has to a defect changelog.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

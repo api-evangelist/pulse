@@ -1,0 +1,73 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: probed
+source: live HTTP probes of every apis.yml host (browser User-Agent), 2026-08-29
+description: >-
+  Probe of the RFC 8615 /.well-known/ namespace across every host named in this repo's
+  apis.yml — the Ivanti corporate site, the MadCap-Flare product-help host, and the
+  Archbee-hosted docs host that serves the Ivanti Neurons for Zero Trust Access API
+  reference. Only one path returns a real document: www.ivanti.com/.well-known/security.txt.
+hosts:
+  - host: www.ivanti.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: pulse-security.txt
+        note: >-
+          Real RFC 9116 document. Two Contact addresses, an Expires of 2033-06-21, a PGP
+          Encryption key at rs.ivanti.com, and a Policy pointing at the Ivanti Vulnerability
+          Disclosure Policy page. Fetched with a browser User-Agent; a bare curl User-Agent
+          is turned away by Cloudflare with a 403 interstitial, which is an edge policy, not
+          an absent document.
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: help.ivanti.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: docs.ivanti.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 200
+        note: >-
+          NOT a document. The Archbee-hosted docs origin answers an unrouted path with the
+          two-byte-key JSON body {"status":"OK"}. It parses as JSON but carries none of the
+          A2A AgentCard fields (no name/url/version/protocolVersion/capabilities/skills), so
+          it is recorded as a miss and no agent card was saved. /openapi.json on the same
+          host returns the identical {"status":"OK"} body for the same reason.
+      - path: /openapi.json
+        status: 200
+        note: Same catch-all {"status":"OK"} health responder — not an OpenAPI document.
+      - path: /llms.txt
+        status: 404
+      - path: /robots.txt
+        status: 404
+summary:
+  hosts_probed: 3
+  paths_probed: 16
+  documents_served: 1
+  catch_all_false_positives: 2
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

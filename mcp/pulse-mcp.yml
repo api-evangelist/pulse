@@ -1,0 +1,58 @@
+specification: API Commons MCP
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: >-
+  Web search plus live probes of www.ivanti.com, help.ivanti.com and docs.ivanti.com,
+  2026-08-29
+description: >-
+  Model Context Protocol posture for the Ivanti secure-access (former Pulse Secure) product
+  family. Ivanti publishes no MCP server — hosted or stdio — for Ivanti Connect Secure,
+  Ivanti Policy Secure or Ivanti Neurons for Zero Trust Access.
+status: none
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+tools: []
+findings:
+  - >-
+    No first-party MCP server exists for these three APIs. Searched the Ivanti product
+    documentation, the Ivanti API documentation hub, npm and the public web on 2026-08-29.
+  - >-
+    Ivanti HAS announced MCP support, but for a DIFFERENT product line: the Ivanti Neurons
+    Platform tech preview, covering DEX, ITSM and MDM. That is not Connect Secure, Policy
+    Secure or nZTA, and it is deliberately not claimed here — crediting this repo with it
+    would attribute a sibling product's agent surface to the secure-access family.
+  - >-
+    The MCP servers findable for "Ivanti" on GitHub and MCP directories
+    (e.g. skv-labs1/ivanti-neurons-mcp, madosh/MCP-ITSM) are third-party community projects
+    against the Neurons ITSM/MDM APIs, not published by Ivanti and not against these APIs.
+  - >-
+    No candidate tool list is derived here. There is no OpenAPI to derive one from, and
+    inventing tool names from prose documentation would produce exactly the kind of
+    plausible-but-unowned artifact this pipeline exists to avoid.
+  - >-
+    Both APIs would also be awkward MCP subjects as they stand: authentication is an
+    administrator session (Basic api_key or a DSID browser cookie), not a machine credential,
+    so an MCP server fronting them would be acting as a named human administrator on a
+    security appliance.
+evidence:
+  - url: https://www.ivanti.com/support/api
+    status: 200
+    checked: '2026-08-29'
+    finding: >-
+      Ivanti's own Product API Documentation Hub lists five API surfaces and names no MCP
+      server for any of them.
+  - url: https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/api-calls
+    status: 200
+    checked: '2026-08-29'
+    finding: Complete nZTA API reference; no MCP endpoint mentioned.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

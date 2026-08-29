@@ -1,0 +1,190 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://www.ivanti.com/resources/security-compliance
+description: >-
+  Standards and compliance posture for the Ivanti secure-access (former Pulse Secure)
+  product family. Two different things are recorded separately below and should not be
+  conflated: what the MANAGEMENT API itself conforms to (very little — it is a plain JSON
+  configuration API), and what the PRODUCT conforms to as a network-security appliance
+  (a long list of real protocol standards and audited compliance programs).
+api_conformance:
+  - id: rest
+    conforms: true
+    evidence: >-
+      Uniform resource-oriented interface over GET/POST/PUT/DELETE with JSON
+      representations, described as such in the provider's REST API Solutions Guide.
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+  - id: openapi
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document is published. Probed for /openapi.json, /openapi.yaml,
+      /swagger.json, /api-docs and /docs on www.ivanti.com, help.ivanti.com and
+      docs.ivanti.com on 2026-08-29; docs.ivanti.com/openapi.json returns HTTP 200 with the
+      catch-all body {"status":"OK"}, which is not a specification.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors are plain HTTP status codes with an unspecified JSON body. No
+      application/problem+json media type and no error type URIs.
+    source: errors/pulse-problem-types.yml
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      Neither API uses OAuth 2.0. ICS/IPS use HTTP Basic with a server-minted api_key; nZTA
+      uses a DSID session cookie.
+    source: authentication/pulse-authentication.yml
+  - id: oidc
+    conforms: false
+    evidence: >-
+      No /.well-known/openid-configuration is served on any host in this repo (404 on
+      www.ivanti.com, 2026-08-29). OIDC is supported as an END-USER authentication protocol
+      by the product, not for the management API — see product_conformance below.
+  - id: scim
+    conforms: false
+    evidence: >-
+      No SCIM schema URNs, no /scim/v2 surface and no SCIM documentation for these products.
+  - id: pagination
+    conforms: false
+    evidence: >-
+      No page/offset/cursor parameters on any documented collection endpoint.
+    source: conventions/pulse-conventions.yml
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header or retry-safety contract is documented.
+    source: conventions/pulse-conventions.yml
+  - id: rfc8594
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response headers. Deprecation is announced in documents only,
+      though the announcements themselves are specific — see lifecycle/pulse-lifecycle.yml.
+  - id: rfc9116
+    conforms: true
+    evidence: >-
+      www.ivanti.com/.well-known/security.txt returns HTTP 200 with Contact, Expires,
+      Encryption, Preferred-Languages, Policy and Hiring fields.
+    source: well-known/pulse-security.txt
+domain_standard:
+  declared: false
+  note: >-
+    REWARD-ONLY, and honestly unclaimed. The network-security / secure-access market has no
+    interchange standard of the kind FHIR is to health or ISO 20022 is to payments, and the
+    Ivanti management APIs declare no domain schema, message type or identifier scheme in
+    their contract. The protocol conformance below is real but it is the PRODUCT speaking
+    standards on the wire to endpoints and identity providers, not the management API
+    declaring a domain shape to its callers.
+product_conformance:
+  - id: acme
+    name: ACME (RFC 8555)
+    conforms: true
+    since: ICS 25.1.3.0
+    evidence: >-
+      "Automated Certificate Management Environment (ACME) Support: Ivanti Connect Secure
+      now supports the Automated Certificate Management Environment (ACME) protocol to
+      automate certificate requests, domain validation, certificate issuance, and
+      certificate deployment on the designated interface."
+    source: https://help.ivanti.com/ps/help/en_US/ICS/25.1.x/25.1.3.0/25.xICSRN.pdf
+  - id: fido2
+    name: FIDO2 / WebAuthn
+    conforms: true
+    evidence: >-
+      "FIDO2 Authentication Enhancements: ICS has been enhanced to support FIDO2-related
+      authentication improvements, enabling support for modern passwordless authentication
+      methods."
+    source: https://help.ivanti.com/ps/help/en_US/ICS/25.1.x/25.1.3.0/25.xICSRN.pdf
+  - id: saml2
+    name: SAML 2.0
+    conforms: true
+    evidence: >-
+      SAML identity providers are a configurable auth-server type in the ICS/IPS
+      configuration tree exposed at
+      /api/v1/configuration/authentication/auth-servers/auth-server.
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/icsips_configs_using_restapis.htm
+  - id: radius
+    name: RADIUS
+    conforms: true
+    evidence: >-
+      RADIUS auth servers, RADIUS clients and RADIUS attribute policies are first-class
+      configuration resources
+      (/api/v1/configuration/uac/network-access/radius-clients/radius-client,
+      .../radius-attribute/radius-attributes-policies/radius-attribute-policy).
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ips_spec_configs__using_restapis.htm
+  - id: tacacs
+    name: TACACS+
+    conforms: true
+    evidence: >-
+      Network Device Administration clients, groups and policies under
+      /api/v1/configuration/uac/networkDeviceAdministration are the TACACS+ surface.
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ips_spec_configs__using_restapis.htm
+  - id: ieee-802-1x
+    name: IEEE 802.1X
+    conforms: true
+    evidence: >-
+      Ivanti Policy Secure enforces network access control with 802.1X; the repo's own
+      feature list and the product documentation both describe it.
+    source: https://www.ivanti.com/products/connect-secure-vpn
+  - id: snmp
+    name: SNMP
+    conforms: true
+    evidence: >-
+      SNMP trap-server configuration (/api/v1/configuration/system/log/snmp/.../trap-servers)
+      and SNMP enforcement clients and policies
+      (/api/v1/configuration/uac/snmpEnforcement/...) are exposed on the API.
+    source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ips_spec_configs__using_restapis.htm
+  - id: syslog
+    name: Syslog
+    conforms: true
+    evidence: >-
+      Syslog settings on ICS/IPS (/api/v1/configuration/system/log/syslog-settings) and a
+      dedicated syslog integration resource on nZTA (/api/integrations/syslog).
+    source: https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/api-calls
+compliance_programs:
+  trust_center: https://assurance.ivanti.com/
+  overview_page: https://www.ivanti.com/resources/security-compliance
+  access_model: >-
+    Named on the public compliance page; the underlying reports are released from the Ivanti
+    Customer Assurance Profile after acknowledging an NDA and requesting them by email.
+  certifications:
+    - name: SOC 2 Type 2
+      published: named
+      document_access: nda-gated
+    - name: ISO/IEC 27001
+      published: named
+      document_access: nda-gated
+    - name: FedRAMP
+      published: named
+    - name: U.S. Federal Government Authorization to Operate (ATO)
+      published: named
+      note: >-
+        Ivanti states ATOs from the Air Force, Army, DoD, DHA, DHS, National Guard, Navy,
+        PACAF, SOCOM and STRATCOM.
+    - name: Common Criteria
+      published: named
+    - name: IRAP (Australian Information Security Registered Assessors Program)
+      published: named
+    - name: Cyber Essentials
+      published: named
+    - name: SIG Lite
+      published: named
+    - name: VPAT 2.4 / Section 508
+      published: named
+    - name: GDPR
+      published: named
+      document_access: nda-gated
+    - name: CCPA
+      published: named
+      document_access: nda-gated
+  regulations_named:
+    - NIS 2 Directive (EU)
+    - DORA — Digital Operational Resilience Act (Regulation (EU) 2022/2554)
+  caveat: >-
+    The compliance page and assurance portal are Ivanti-wide. Neither names Connect Secure,
+    Policy Secure or nZTA at product level, and the assurance profile explicitly gives no
+    product-level breakdown, so none of these should be read as a per-product attestation.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

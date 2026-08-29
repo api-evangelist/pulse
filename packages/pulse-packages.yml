@@ -1,0 +1,79 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, api.github.com/orgs/pulsesecure, and the Ivanti REST API
+  Solutions Guide — searched 2026-08-29
+description: >-
+  First-party client library search for the Ivanti secure-access APIs. Ivanti ships no
+  official SDK, in any language, for Connect Secure, Policy Secure or Neurons for Zero Trust
+  Access. The provider's own integration guidance is curl and a Postman collection.
+package_count: 0
+official_sdk_count: 0
+packages: []
+registries_searched:
+  - registry: npm
+    query: 'ivanti, pulse-secure'
+    endpoint: https://registry.npmjs.org/-/v1/search
+    result: >-
+      No first-party package. Matches are third-party n8n community nodes for Ivanti Neurons
+      for ITSM (a different product line) published by individual maintainers, not by Ivanti.
+    version: null
+    published: null
+  - registry: pypi
+    query: 'ivanti, pulsesecure, ivanti-neurons'
+    endpoint: https://pypi.org/pypi/<name>/json
+    result: 404 on every candidate name.
+    version: null
+    published: null
+  - registry: github
+    query: 'org:pulsesecure'
+    endpoint: https://api.github.com/orgs/pulsesecure/repos
+    result: >-
+      The pulsesecure GitHub organization exists and is public but holds only two repos, both
+      infrastructure forks unrelated to any API — an eventlet mirror (last pushed 2023-01-28)
+      and a Vagrant Alpine box (2021-01-13). No client library, no spec, no examples.
+    version: null
+    published: null
+  - registry: none
+    query: 'ivanti / ivanti-inc GitHub organizations'
+    endpoint: https://api.github.com/orgs/<name>
+    result: 404 — Ivanti runs no public GitHub organization under either name.
+    version: null
+    published: null
+first_party_tooling:
+  - name: ICS API Doc (Postman collection + environment)
+    kind: postman-collection
+    official: true
+    distribution: >-
+      Downloaded from the Ivanti Software Downloads portal as ics-postman-collections-*.zip
+      (Downloads > Network Security > Ivanti Connect Secure > latest version), then imported
+      into Postman as a .postman_collection plus postman_environment.json pair.
+    registry: none
+    version: null
+    published: null
+    version_note: >-
+      No registry and no published version. The ZIP is versioned only by the ICS release it
+      ships with, and the download portal requires a customer sign-in, so a consumer cannot
+      tell from outside what version they would get.
+    gated: true
+    docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ics_postman_apis.htm
+    note: >-
+      Postman's own Code snippet generator is the substitute Ivanti points at for language
+      bindings — "To access specific coding language scripts, click the Code icon in the
+      toolbar" — which is an explicit acknowledgement that no SDK exists.
+findings:
+  - >-
+    A management API with no SDK in any language and no public code samples repository puts
+    the whole integration burden on the caller. The one piece of tooling Ivanti does ship —
+    the Postman collection — sits behind the customer download portal, so it is invisible to
+    anyone evaluating the product and unavailable to an unauthenticated agent.
+  - >-
+    There is no abandonment signal to read here, because there is nothing published to have
+    been abandoned.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

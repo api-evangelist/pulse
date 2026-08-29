@@ -1,0 +1,123 @@
+specification: API Commons Authentication
+specificationVersion: '0.1'
+provider: Pulse
+providerId: pulse
+generated: '2026-08-29'
+method: searched
+source: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+description: >-
+  Authentication profile for the three Ivanti secure-access APIs profiled in this repo.
+  Read from the provider's own published REST API Solutions Guide and the Ivanti Neurons
+  for Zero Trust Access API guide. None of these APIs use OAuth 2.0 or OpenID Connect —
+  the appliance APIs use HTTP Basic with a server-minted api_key, and the nZTA tenant API
+  uses a session cookie obtained from the admin sign-in flow.
+docs:
+  - https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+  - https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/overview.htm
+  - https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/retrieving-the-authentication-dsid
+transport_security:
+  tls_required: true
+  note: >-
+    "The entire communication is over TLS." — REST API Solutions Guide, Authentication for
+    REST APIs. Appliance certificates are customer-installed; the guide notes callers must
+    have the appliance server CA in the curl trust store.
+apis:
+  - api: Ivanti Connect Secure REST API
+    aid: pulse:ivanti-connect-secure-rest-api
+    schemes:
+      - id: realm_auth
+        type: http
+        scheme: basic
+        preferred: true
+        flow: >-
+          POST /api/v1/realm_auth with an HTTP Basic Authorization header carrying the
+          administrator username/password and a JSON body naming the admin realm
+          ({"realm": "adminrealm"}). The response returns a JSON body containing an
+          api_key. Where the realm enforces secondary authentication the first response
+          returns a resume_id instead, which is posted back to the same endpoint to obtain
+          the api_key.
+        credential_in: Authorization header (Basic)
+        token_field: api_key
+        subsequent_use: >-
+          The api_key value is used as the Basic-auth USERNAME with an EMPTY password on
+          every subsequent request.
+        lifetime: >-
+          Valid until the session timeout configured on the Admin role mapped to the admin
+          realm. After expiry the caller re-issues POST /api/v1/realm_auth.
+        docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+      - id: auth
+        type: http
+        scheme: basic
+        preferred: false
+        deprecated: true
+        deprecation_note: >-
+          "Ivanti recommends using api/v1/realm_auth instead of api/v1/auth as it will not
+          be supported from 22.7R2.1 release onwards." — REST API Solutions Guide.
+        flow: >-
+          GET /api/v1/auth with an HTTP Basic Authorization header of the administrator
+          username/password against the Administrators auth server. Returns {"api_key": "..."}.
+        docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+    authorization_gate:
+      description: >-
+        REST access is not on by default. The administrator account must have the "Allow
+        access to REST APIs" option enabled, either from Authentication > Auth. Servers >
+        Administrators > Update Administrator in the admin console, or by answering y to
+        "Do you want to enable REST API access for this administrator (y/n)" at the serial
+        console during provisioning or admin creation. The api_key is invalidated when the
+        administrator account or the Allow REST API setting is toggled.
+      docs: https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm
+    scopes: []
+    scopes_note: >-
+      There is no scope or permission-string vocabulary on this API. Authorization is
+      carried entirely by the admin role and realm the authenticating administrator is
+      mapped to, so the granularity lives in appliance configuration, not in the token.
+  - api: Ivanti Policy Secure REST API
+    aid: pulse:ivanti-policy-secure-rest-api
+    same_as: pulse:ivanti-connect-secure-rest-api
+    note: >-
+      Ivanti Policy Secure shares the ICS/IPS REST API Solutions Guide and the same
+      /api/v1/realm_auth and /api/v1/auth mechanisms; only the resource tree under
+      /api/v1/configuration/uac differs.
+    docs: https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/overview.htm
+  - api: Ivanti Neurons for Zero Trust Access REST API
+    aid: pulse:ivanti-neurons-zero-trust-rest-api
+    schemes:
+      - id: dsid-cookie
+        type: apiKey
+        in: cookie
+        name: DSID
+        preferred: true
+        flow: >-
+          The Data Set Identification (DSID) cookie is required for all API use. It is
+          obtained by driving the tenant admin sign-in flow: GET <tenant>/login/admin to
+          pick up the DSSIGNIN cookie, then POST to
+          <tenant>/dana-na/auth/<DSSIGNIN>/login.cgi with username, password and
+          realm "zta-admin-users", following the "continue the session" form
+          (formdatastr + xsauth) where a prior session is open. The DSID cookie on the
+          resulting session is then sent on every API call.
+        alternate_flow: >-
+          The DSID value can also be read by hand from browser devtools (Network >
+          Cookies) while signed into the nZTA tenant admin UI.
+        usage: 'curl -v --cookie "DSID=<value>" <api request url>'
+        docs: https://docs.ivanti.com/ps/help/en_us/nsa/22x/nsa-zta/api/retrieving-the-authentication-dsid
+    scopes: []
+    scopes_note: >-
+      No OAuth scopes are published. Access is bounded by the tenant and the admin realm
+      the DSID session was minted against.
+oauth2: false
+openid_connect: false
+mutual_tls: false
+api_keys: true
+notes:
+  - >-
+    Both mechanisms are administrator-session-derived, not client-credential-derived: there
+    is no developer key you can mint from a portal, and no machine-to-machine grant. An
+    agent calling either API is acting as a named appliance or tenant administrator.
+  - >-
+    ICS/IPS support SAML, OIDC, RADIUS, TACACS+ and 802.1X as authentication protocols for
+    the END USERS the product secures. Those are product features, not authentication for
+    the management API itself, and are recorded in conformance/pulse-conformance.yml rather
+    than here.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
