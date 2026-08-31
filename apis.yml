@@ -145,6 +145,11 @@ apis:
       - type: Conventions
         url: conventions/pulse-conventions.yml
 common:
+  - type: ParentCompany
+    url: https://apis.io/providers/ivanti/
+    name: Ivanti
+    x-relationship: acquired
+    x-evidence: "Ivanti's secure-access product family, formerly Pulse Secure, acquired by Ivanti in 2020."
   - type: WellKnown
     url: well-known/pulse-well-known.yml
   - type: SecurityTxt
