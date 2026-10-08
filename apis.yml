@@ -148,6 +148,8 @@ apis:
       - type: Conventions
         url: conventions/pulse-conventions.yml
 common:
+  - type: FinOps
+    url: finops/pulse-finops.yml
   - type: ParentCompany
     url: https://apis.io/providers/ivanti/
     name: Ivanti
