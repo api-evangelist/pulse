@@ -1,4 +1,4 @@
-# Pulse (pulse)
+# Pulse
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,103 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-APIs for Ivanti Pulse Secure (formerly Pulse Secure), providing secure remote access VPN, network access control, and zero trust access solutions.
+Ivanti's secure-access product family, formerly Pulse Secure, acquired by Ivanti in 2020. Three administrator-facing REST APIs configure and observe it: Ivanti Connect Secure for SSL VPN remote access, Ivanti Policy Secure for 802.1X and RADIUS/TACACS+ network access control, and Ivanti Neurons for Zero Trust Access for per-application ZTNA. Connect Secure and Policy Secure are customer-run appliances whose management API is reached at the customer's own host; nZTA is a hosted tenant. All three are configuration and management interfaces rather than data-plane APIs — they change who can reach what on a corporate network. Ivanti publishes no OpenAPI and no SDK for any of them; the published contract is prose documentation with worked curl examples plus a customer-portal Postman collection.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/pulse/refs/heads/main/apis.yml)
+**Areas:** Ivanti · Network Security · Secure Access · SSL VPN · VPN · Zero Trust · ZTNA · Network Access Control · Remote Access · Identity and Access Management · Security · Pulse Secure
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## Pulse on APIs.io
 
-## Tags:
+Everything profiled for Pulse is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pulse/](https://apis.io/providers/pulse/)** — or go straight to one of the APIs or properties below.
 
- - Ivanti, Network Security, Secure Access, SSL VPN, VPN, Zero Trust
+### APIs (3)
 
-## Timestamps
+- [Ivanti Connect Secure REST API](https://apis.io/apis/pulse/ivanti-connect-secure-rest-api/) — REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure) VPN appliances. Provides endpoints for system configuration, user and role…
+- [Ivanti Policy Secure REST API](https://apis.io/apis/pulse/ivanti-policy-secure-rest-api/) — REST API for managing Ivanti Policy Secure (formerly Pulse Policy Secure) network access control appliances.
+- [Ivanti Neurons for Zero Trust Access REST API](https://apis.io/apis/pulse/ivanti-neurons-zero-trust-rest-api/) — REST API for managing Ivanti Neurons for Zero Trust Access (nZTA), providing endpoints for managing zero trust access policies, gateways, and user access.
 
-- **Created:** 2024-01-15
-- **Modified:** 2026-04-18
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Ivanti Connect Secure REST API
-REST API for managing Ivanti Connect Secure (formerly Pulse Connect Secure) VPN appliances. Provides endpoints for system configuration, user and role management, authentication server configuration, license management, network settings, resource policies, and system maintenance operations.
+#### Security (4)
 
-**Human URL:** [https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm](https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm)
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags:
+- [Pulse Authentication](https://apis.io/security/pulse/pulse-authentication/)
+- [Pulse Domain Security](https://apis.io/security/pulse/pulse-domain-security/)
+- [Pulse Trust Center](https://apis.io/security/pulse/pulse-trust-center/)
+- [Pulse Vulnerability Disclosure](https://apis.io/security/pulse/pulse-vulnerability-disclosure/)
 
- - Authentication, Configuration, Network Security, Secure Access, SSL VPN, VPN
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm)
+- [Pulse Plans Pricing](https://apis.io/plans/pulse/pulse-plans-pricing/)
 
-### Ivanti Policy Secure REST API
-REST API for managing Ivanti Policy Secure (formerly Pulse Policy Secure) network access control appliances.
+#### Rate limits (1)
 
-**Human URL:** [https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm](https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm)
+Published request limits.
 
-#### Tags:
+- [Pulse Rate Limits](https://apis.io/rate-limits/pulse/pulse-rate-limits/)
 
- - NAC, Network Access Control, Policy, Security
+#### FinOps (1)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [Documentation](https://help.ivanti.com/ps/help/en_US/IPS/vNow/pcs-pps-rest-api/landingpage.htm)
+- [Pulse Finops](https://apis.io/finops/pulse/pulse-finops/)
 
-### Ivanti Neurons for Zero Trust Access REST API
-REST API for managing Ivanti Neurons for Zero Trust Access (nZTA), providing endpoints for managing zero trust access policies, gateways, and user access.
+## Where to find this API
 
-**Human URL:** [https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm](https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags:
-
- - Secure Access, Zero Trust, ZTNA
-
-#### Properties
-
-- [Documentation](https://help.ivanti.com/ps/help/en_US/nSA/22.x/nsa-zta/api/landingpage.htm)
-
-## Common Properties
-
+- [Website](https://www.ivanti.com/products/connect-secure-vpn)
 - [Documentation](https://www.ivanti.com/support/product-documentation)
-- [PrivacyPolicy](https://www.ivanti.com/company/legal/privacy-policy)
-- [TermsOfService](https://www.ivanti.com/company/legal)
-- [StatusPage](https://status.ivanticloud.com/)
+- [Getting started](https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/ovw.htm)
+- [API reference](https://help.ivanti.com/ps/help/en_US/ICS/22.x/apig/rest_api_soln_guide/landingpage.htm)
+- [Support](https://www.ivanti.com/support)
 - [Blog](https://www.ivanti.com/blog)
-- [Support](https://forums.ivanti.com/s/welcome-pulse-secure?language=en_US)
+- [Terms of service](https://www.ivanti.com/company/legal)
+- [Privacy policy](https://www.ivanti.com/company/legal/privacy-policy)
+- [Status](https://status.ivanticloud.com/)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| SSL VPN Remote Access | Secure remote access to corporate resources through SSL VPN tunnels with granular access policies. |
-| Zero Trust Network Access | Identity-aware, application-level access control without exposing network resources. |
-| Network Access Control | Enforce security policies on endpoints before granting network access with 802.1X and agent-based checks. |
-| Multi-Factor Authentication | Integrate with MFA providers for strong authentication on VPN and network access. |
-| Host Checker | Validate endpoint compliance with security policies before granting access. |
-| Role-Based Access Control | Define granular access policies based on user roles, device type, and compliance status. |
+**Kin Score 38.5** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 61.9 |
+| Access clarity | 43.4 |
 
-| Name | Description |
-|------|-------------|
-| Remote Workforce Access | Provide secure remote access to corporate applications and resources for distributed teams. |
-| Zero Trust Architecture | Implement zero trust security with per-application access controls and continuous verification. |
-| BYOD Management | Securely enable bring-your-own-device access with endpoint compliance checking. |
-| Partner and Contractor Access | Grant controlled, time-limited access to third-party partners and contractors. |
+**Agent readiness 7.9** — agent-aware
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-| Name | Description |
-|------|-------------|
-| Microsoft Active Directory | Authenticate users against Active Directory for single sign-on and role mapping. |
-| RADIUS Servers | Integrate with RADIUS for centralized authentication and accounting. |
-| SIEM Platforms | Forward access logs and security events to SIEM platforms for monitoring and analysis. |
-| MDM Solutions | Integrate with mobile device management solutions for endpoint compliance verification. |
-| Identity Providers | Connect with SAML and OIDC identity providers for federated authentication. |
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
 
-## Maintainers
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pulse/](https://apis.io/providers/pulse/).
 
-**FN:** Kin Lane
+## How this profile is made
 
-**Email:** kin@apievangelist.com
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Pulse: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pulse/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
